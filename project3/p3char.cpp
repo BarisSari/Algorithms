@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <fstream>
 
-Book::Book() {
+Book::Book() { //default constructor for Book character class
     pageNo = 0;
     lineNo = 0;
     index = 0;
@@ -15,6 +15,7 @@ Book::Book() {
 
 std::string Book::generateKey(int a, int b, int c) {
     std::ostringstream ss;
+    //setw and setfill are used to not generate duplicate keys when lineNo or index is lower than 10.
     ss << a << std::setw(2) << std::setfill('0') << b << std::setw(2) << std::setfill('0') << c;
     return ss.str();
 }
@@ -25,7 +26,7 @@ void Book::insertInputFile(Book *inputBooks) {
     int i=0;
 
     std::ifstream infile(inputFileName);
-    while (std::getline(infile, line)) { //reading lines with changed istream function
+    while (std::getline(infile, line)) { //reading the file line-by-line with istream function
         std::stringstream iss(line);
         iss >> inputBooks[i].pageNo >> inputBooks[i].lineNo >> inputBooks[i].index >> inputBooks[i].c;
         tempKey = inputBooks[i].generateKey(inputBooks[i].pageNo, inputBooks[i].lineNo, inputBooks[i].index);

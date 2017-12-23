@@ -1,5 +1,5 @@
-#ifndef UNTITLED_P3CHAR_H
-#define UNTITLED_P3CHAR_H
+#ifndef P3CHAR_H
+#define P3CHAR_H
 
 #include <iostream>
 
@@ -15,7 +15,6 @@ public:
     void insertInputFile(Book *books);
     void insertLookupFile(Book *books);
     Book();
-//    ~Book();
 };
 
-#endif //UNTITLED_P3CHAR_H
+#endif //P3CHAR_H
