@@ -1,6 +1,13 @@
-/*  Bayram Baris Sari
-*   150130123
-*   Project II    */
+/*  Developed by Bayram Baris Sari
+*   E-mail: bayrambariss@gmail.com
+*   Tel No: +90 539 593 7501    
+*
+*   This is the implementation of quick sort algorithm.
+*   It takes an input with this format:
+*   population,minimum_age,maximum_age,gender,zipcode,geo_id
+*   Data is sorted according to population, and if it's the same,
+*   it is sorted according to geo_id values.
+*/
 
 #include <iostream>
 #include <fstream>
@@ -58,12 +65,15 @@ void quickSort(Residence *R,int first_index, int last_index){
 
 int main(int argc, char* argv[]) {
     int N = std::atoi(argv[1]);
+    std::string inputFile = argv[2]; //input file name
     int i = 0;
     Residence *residences = new Residence[N];
     std::string pop,min,max,gend,zip,geo,skipLine;
 
-    std::ifstream infile("/home/baris/CLionProjects/project2/population_by_zip_2010.csv");
-    //for(int j=0;j<56097;j++)  //I used this to skip rows randomly and select different data for finding average running time
+    std::ifstream infile(inputFile);
+    //I used this to skip rows randomly and select different data for finding average running time
+    //for(int j=0;j<56097;j++)  
+    //  getline(infile, skipLine); 
     getline(infile, skipLine); //skipping first row
 
     while (getline(infile, pop, ',') && getline(infile, min, ',') && getline(infile, max, ',') &&
@@ -85,11 +95,11 @@ int main(int argc, char* argv[]) {
     double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC; //calculating sorting time
     std::cout << "Execution time: " << elapsed_secs << " s" << std::endl;
 
-/*  std::ofstream output("output.csv"); //I have used it for writing the result in a different file which is used for worst-case.
+    std::ofstream output("output.csv"); //I have used it for writing the result in a different file which is used for worst-case.
     for (int j = 0; j < 1622831; ++j) {
         output << residences[j].population << "," << residences[j].minimum_age << "," << residences[j].maximum_age
                   << "," << residences[j].gender << "," << residences[j].zipcode << "," << residences[j].geo_id << std::endl;
-    }*/
+    }
 
     /*for (int j = 0; j < N; ++j) { //I have used this for testing whether the result is true or not
         std::cout << residences[j].population << " " << residences[j].minimum_age << " " << residences[j].maximum_age
