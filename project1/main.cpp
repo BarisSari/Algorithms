@@ -1,6 +1,18 @@
-/*  Bayram Baris Sari
-*   150130123
-*   Project I    */
+/*  Developed by Bayram Baris Sari
+*   E-mail: bayrambariss@gmail.com
+*   Tel No: +90 539 593 7501    
+*
+*	This is the implementation of merge sort and
+*	insertion sort for a deck of Hearthstone.
+*	There are two types of filtering full and
+*	normal: 
+*	Full sort classifies according to "Class",
+* 	if they are the same, according to "Cost", and if
+*	they are both same, by "Name".
+*	Normal sort classifies according to "Class"
+*	Example input has this format:
+*	Name+"\t"+Class+"\t"+Rarity+"\t"+Set+"\t"+Type+"\t"+Cost\n
+*/
 
 #include <iostream>
 #include <fstream>
@@ -70,7 +82,7 @@ void mergeFilter(Card *Cards, int left, int medium, int right) {
         else
             Cards[k++] = rightCards[j++];
     }
-    //Copying the rest to the original structure
+    //copying the rest to the original structure
     while (i < leftSize)
         Cards[k++] = leftCards[i++];
     while (j < rightSize)
@@ -169,16 +181,20 @@ void insertionFullSort(Card *Cards,int size){
 }
 
 void CardManager::FullSort() {
-    if (sortingType == "-i"){
+    if (sortingType == "-i")
         insertionFullSort(myCards,CardsSize);
-    }else
+    else if (sortingType == "-m")
         mergeFullSort(myCards,0,CardsSize);
+    else
+    	std::cout << "Invalid sorting algorithm!" << std::endl;
 }
 void CardManager::FilterSort() {
     if (sortingType == "-i")
         insertionFilterSort(myCards,CardsSize);
-    else
+    else if (sortingType == "-m")
         mergeFilterSort(myCards, 0, CardsSize);
+    else
+    	std::cout << "Invalid sorting algorithm!" << std::endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -204,10 +220,12 @@ int main(int argc, char* argv[]) {
     infile.close();
     Manager.myCards = myList;
     clock_t begin = clock();
-    if(Manager.sortingProcedure == "Full")
+    if(Manager.sortingProcedure == "-f")
         Manager.FullSort();
-    else
+    else if(Manager.sortingProcedure == "-n")
         Manager.FilterSort();
+    else
+    	std::cout << "Invalid sorting procedure!" << std::endl;
     clock_t end = clock();
     double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
