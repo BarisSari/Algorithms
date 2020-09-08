@@ -46,11 +46,16 @@ Node Node::create(int e, int w, int number, variables vr, variables vr1, variabl
 }
 
 class Graph {
-    std::list<class Node> *list;
+    std::list<class Node> *node_list;
     int visitedNodes;
     int movCount;
 public:
-    Graph(); //constructor
+    Graph() { // constructor
+        node_list = new std::list<class Node>[11];
+        visitedNodes = 0;
+        movCount = 0;
+    };
+
     void insert(int, const class Node &);
 
     int *BFS(int s);
@@ -67,14 +72,9 @@ public:
     void create_example_graph(class Node *nodes);
 };
 
-Graph::Graph() {
-    list = new std::list<class Node>[11];
-    visitedNodes = 0;
-    movCount = 0;
-}
 
 void Graph::insert(int from, const class Node &x) {
-    list[from].push_back(x);  //add node x to the end of list[from]
+    node_list[from].push_back(x);  //add node x to the end of node_list[from]
 }
 
 int *Graph::BFS(int s) {
@@ -85,7 +85,7 @@ int *Graph::BFS(int s) {
     int *parent = new int[11];  //its necessary for backtracking
     bool discovered[11];
 
-    //initially, parents are -1 and all nodes aren't discovered yet
+    //initially, parents are -1 and not any node is discovered yet
     for (int i = 0; i < 11; i++) {
         discovered[i] = false;
         parent[i] = -1;
@@ -98,7 +98,7 @@ int *Graph::BFS(int s) {
 
         u = queue.front();
         queue.pop();
-        for (it = list[u].begin(); it != list[u].end(); ++it) {  //parsing the list[u]
+        for (it = node_list[u].begin(); it != node_list[u].end(); ++it) {  //parsing the node_list[u]
             if (!discovered[(*it).no]) {    //if a node hasn't been discovered yet, mark it discovered, set parent and push it to the queue
                 discovered[(*it).no] = true;
                 parent[(*it).no] = u;
@@ -120,7 +120,7 @@ int *Graph::DFS(int s) {
     int *parent = new int[11];  //it's necessary for backtracking
     bool discovered[11];
 
-    //initially, parents are -1 and all nodes aren't discovered yet
+    //initially, parents are -1 and not any node is discovered yet
     for (int i = 0; i < 11; i++) {
         discovered[i] = false;
         parent[i] = -1;
@@ -135,9 +135,9 @@ int *Graph::DFS(int s) {
         u = stack.top();
         stack.pop();
         if (discovered[u]) {} else discovered[u] = true;
-        for (it = list[u].begin(); it != list[u].end(); ++it) {  //parsing adjacency list[u]
+        for (it = node_list[u].begin(); it != node_list[u].end(); ++it) {  //parsing adjacency node_list[u]
             if (discovered[(*it).no]) {}
-            else {  //if list[u] has a node that not discovered, push it to stack, set parent of the node
+            else {  //if node_list[u] has a node that not discovered, push it to stack, set parent of the node
                 stack.push((*it).no);
                 movCount++;
                 parent[(*it).no] = u;
@@ -175,9 +175,9 @@ void Graph::print_path(std::list<int> ls, class Node *nodes) {
                 }
                 std::cout << "<)";
             } else {  //if he is at west now, that means he was east side of the river
-                for (auto & i : nodes[*it].west) {
-                    if (!i.empty() &&  i != " Farmer") { //continue if west[i] is not empty or farmer
-                        for (auto & j : nodes[*prev].east) {  //check the thing which was at east before, and it is at west now
+                for (auto &i : nodes[*it].west) {
+                    if (!i.empty() && i != " Farmer") { //continue if west[i] is not empty or farmer
+                        for (auto &j : nodes[*prev].east) {  //check the thing which was at east before, and it is at west now
                             if (i == j) {  //if it's found, print it and break inner loop
                                 std::cout << i << ", ";
                                 break;

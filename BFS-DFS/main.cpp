@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     int *p = nullptr;
     int i;
     Node *nodes = new Node[11];
-    Graph g;    //creating adjacency list
+    Graph g;    //creating adjacency node_list
     g.create_example_graph(nodes);
 
     clock_t begin = clock();
